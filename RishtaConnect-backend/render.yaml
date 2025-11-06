@@ -1,9 +1,12 @@
 services:
   - type: web
     name: rishtaconnect-backend
-    env: java
+    runtime: java
+    region: oregon
+    plan: free
     buildCommand: ./mvnw clean install -DskipTests
     startCommand: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/*.jar
+    healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -19,3 +22,5 @@ services:
         sync: false
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+      - key: UPLOAD_DIR
+        value: /opt/render/project/src/uploads/gallery

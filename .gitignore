@@ -1,0 +1,21 @@
+# RishtaConnect - Root .gitignore
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Documentation builds
+docs/_build/
