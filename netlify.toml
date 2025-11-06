@@ -4,7 +4,7 @@
 [build]
   base = "RishtaConnect-frontend"
   command = "npm install && npm run build"
-  publish = "RishtaConnect-frontend/build"
+  publish = "build"
 
 # Redirect all routes to index.html for React Router
 [[redirects]]
