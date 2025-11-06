@@ -7,7 +7,7 @@
 
 ### 1. DATABASE_URL (Internal - Faster)
 ```
-postgresql://rishtaconnect_user:4EfuJWPnOHVz21VsBrsl1pVJvVgz9k0v@dpg-d46er14hg0os738rt01g-a/rishtaconnect
+jdbc:postgresql://dpg-d46er14hg0os738rt01g-a.singapore-postgres.render.com/rishtaconnect?user=rishtaconnect_user&password=4EfuJWPnOHVz21VsBrsl1pVJvVgz9k0v&sslmode=require
 ```
 
 ### 2. JWT_SECRET_KEY
@@ -35,7 +35,7 @@ prod
 ## 📋 Copy-Paste Format (One by One in Render):
 
 **Key:** DATABASE_URL  
-**Value:** postgresql://rishtaconnect_user:4EfuJWPnOHVz21VsBrsl1pVJvVgz9k0v@dpg-d46er14hg0os738rt01g-a/rishtaconnect
+**Value:** jdbc:postgresql://dpg-d46er14hg0os738rt01g-a.singapore-postgres.render.com/rishtaconnect?user=rishtaconnect_user&password=4EfuJWPnOHVz21VsBrsl1pVJvVgz9k0v&sslmode=require
 
 **Key:** JWT_SECRET_KEY  
 **Value:** 843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3
