@@ -9,18 +9,23 @@ services:
     healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
-        sync: false
-      - key: DB_USERNAME
-        sync: false
-      - key: DB_PASSWORD
-        sync: false
+        fromDatabase:
+          name: rishtaconnect-db
+          property: connectionString
       - key: JWT_SECRET_KEY
-        sync: false
+        generateValue: true
       - key: FRONTEND_URL
         sync: false
       - key: BASE_URL
         sync: false
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: UPLOAD_DIR
-        value: /opt/render/project/src/uploads/gallery
+      - key: FILE_UPLOAD_DIR
+        value: /opt/render/project/src/uploads
+
+databases:
+  - name: rishtaconnect-db
+    databaseName: rishtaconnect
+    user: rishtaconnect_user
+    region: oregon
+    plan: free

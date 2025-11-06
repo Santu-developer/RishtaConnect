@@ -62,10 +62,10 @@ services:
   #       destination: /index.html
 
 databases:
-  # MySQL Database
+  # PostgreSQL Database (Render Free Tier)
   - name: rishtaconnect-db
-    databaseName: rishtaconnect_db
+    databaseName: rishtaconnect
     user: rishtaconnect_user
     region: oregon # Same region as backend for better performance
-    plan: free # Change to 'starter' for production
+    plan: free # Free tier: 256MB RAM, 1GB storage, expires after 90 days
     ipAllowList: [] # Empty = allow all IPs

@@ -8,33 +8,32 @@ Complete guide to deploy both Frontend & Backend on Render.
 
 1. **GitHub Repository**: https://github.com/Santu-developer/RishtaConnect
 2. **Render Account**: Sign up at https://render.com (Free tier available)
-3. **MySQL Database** (Render provides free tier)
+3. **PostgreSQL Database** (Render provides free tier - 256MB RAM, 1GB storage)
 
 ---
 
-## 🗄️ Step 1: Deploy MySQL Database on Render
+## 🗄️ Step 1: Deploy PostgreSQL Database on Render
 
 ### 1.1 Create Database
 1. Login to **Render Dashboard**: https://dashboard.render.com
-2. Click **"New +"** → Select **"PostgreSQL"** OR use external MySQL (recommended)
-3. For **External MySQL** (Better option):
-   - Use **Railway.app** or **PlanetScale** for free MySQL
-   - Or use Render's PostgreSQL and update backend code
-
-### 1.2 Alternative: Use Railway for MySQL (Recommended)
-1. Go to https://railway.app
-2. Click **"Start a New Project"** → **"Deploy MySQL"**
-3. Once deployed, copy these credentials:
-   - **Host**: `containers-us-west-xxx.railway.app`
-   - **Port**: `6379`
-   - **Database**: `railway`
-   - **Username**: `root`
-   - **Password**: (auto-generated)
-
-4. Construct `DATABASE_URL`:
+2. Click **"New +"** → Select **"PostgreSQL"**
+3. Configure database:
+   ```yaml
+   Name: rishtaconnect-db
+   Database: rishtaconnect
+   User: rishtaconnect_user (auto-generated)
+   Region: Oregon (US West) or Singapore
+   Plan: Free
    ```
-   jdbc:mysql://HOST:PORT/DATABASE?useSSL=true&requireSSL=false
-   ```
+4. Click **"Create Database"**
+5. Wait for database to be ready (2-3 minutes)
+
+### 1.2 Get Database Connection String
+1. Once created, go to database dashboard
+2. Copy **"Internal Database URL"** (format: `postgres://user:password@host:port/database`)
+3. Render will automatically inject this as `DATABASE_URL` environment variable
+
+**Note**: Free tier PostgreSQL expires after 90 days of inactivity. For production, upgrade to Starter plan ($7/month).
 
 ---
 
@@ -61,14 +60,14 @@ Click **"Environment"** tab and add:
 
 | Key | Value | Example |
 |-----|-------|---------|
-| `DATABASE_URL` | MySQL JDBC URL | `jdbc:mysql://containers-us-west-123.railway.app:6379/railway?useSSL=true` |
-| `DB_USERNAME` | Database username | `root` |
-| `DB_PASSWORD` | Database password | `your_password_here` |
+| `DATABASE_URL` | Auto-injected by Render | (automatically set from PostgreSQL database) |
 | `JWT_SECRET_KEY` | Random secret key | `843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3` |
-| `FRONTEND_URL` | Frontend URL (update later) | `https://rishtaconnect-frontend.onrender.com` |
+| `FRONTEND_URL` | Frontend URL (update later) | `https://rishtaconnect-frontend.onrender.com` or `https://classy-arithmetic-4918d4.netlify.app` |
 | `BASE_URL` | Backend URL (update after deploy) | `https://rishtaconnect-backend.onrender.com` |
 | `SPRING_PROFILES_ACTIVE` | Production profile | `prod` |
 | `FILE_UPLOAD_DIR` | Upload directory | `/opt/render/project/src/uploads` |
+
+**Note**: When using Blueprint (render.yaml), DATABASE_URL is automatically linked from PostgreSQL database.
 
 ### 2.3 Generate JWT Secret Key
 Run in terminal:
@@ -161,13 +160,11 @@ services:
     startCommand: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/*.jar
     envVars:
       - key: DATABASE_URL
-        sync: false
-      - key: DB_USERNAME
-        sync: false
-      - key: DB_PASSWORD
-        sync: false
+        fromDatabase:
+          name: rishtaconnect-db
+          property: connectionString
       - key: JWT_SECRET_KEY
-        sync: false
+        generateValue: true
       - key: FRONTEND_URL
         sync: false
       - key: BASE_URL
@@ -217,10 +214,10 @@ services:
 - Static sites are always active (no spin down)
 
 ### Database Options:
-1. **Railway MySQL** (Recommended): 500MB free, always active
-2. **PlanetScale**: 5GB free, serverless MySQL
-3. **Render PostgreSQL**: Free tier available (requires code changes)
-4. **AWS RDS Free Tier**: 12 months free
+1. **Render PostgreSQL** (Recommended): Free tier - 256MB RAM, 1GB storage, expires after 90 days inactivity
+2. **Supabase PostgreSQL**: 500MB free, always active
+3. **ElephantSQL**: 20MB free tier
+4. **AWS RDS Free Tier**: 12 months free (requires AWS account)
 
 ### File Uploads:
 - Render's free tier uses **ephemeral storage**
@@ -261,10 +258,10 @@ curl https://rishtaconnect-backend.onrender.com/api/members
 3. Ensure all dependencies in `package.json`
 
 ### Database Connection Issues:
-1. Verify `DATABASE_URL` format
-2. Check database credentials
-3. Ensure database allows external connections
-4. Test connection using MySQL Workbench
+1. Verify `DATABASE_URL` format (should be `postgres://user:password@host:port/database`)
+2. Check that database is in same region as backend for better performance
+3. Ensure database is active (free tier expires after 90 days inactivity)
+4. Test connection using pgAdmin or DBeaver
 
 ### CORS Errors:
 1. Verify `FRONTEND_URL` in backend environment variables
@@ -304,10 +301,14 @@ If keeping Netlify for frontend:
 |---------|-----------|-----------|
 | **Render Backend** | Free (spins down) | $7/month (always on) |
 | **Render Frontend** | Free (always on) | N/A (static is free) |
-| **Railway MySQL** | $5/month (500MB) | Pay as you go |
-| **Total** | ~$5/month | ~$12/month |
+| **Render PostgreSQL** | Free (256MB, 90 day expiry) | $7/month (512MB, always on) |
+| **Total** | **FREE** | ~$14/month |
 
-**Alternative**: Keep Netlify for frontend (free) + Render for backend = ~$5/month
+**Recommended Setup**:
+- **Frontend**: Netlify (FREE, already deployed ✅) 
+- **Backend**: Render (FREE with spin down)
+- **Database**: Render PostgreSQL (FREE)
+- **Total**: **100% FREE** (with limitations)
 
 ---
 

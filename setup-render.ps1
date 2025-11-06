@@ -36,11 +36,9 @@ Write-Host ""
 Write-Host "📝 Step 3: Required Environment Variables for Backend:" -ForegroundColor Yellow
 Write-Host "---------------------------------------------------" -ForegroundColor Gray
 @"
-DATABASE_URL=jdbc:mysql://your-host:3306/rishtaconnect_db?useSSL=true
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
+DATABASE_URL=(automatically injected by Render from PostgreSQL database)
 JWT_SECRET_KEY=$jwtSecret
-FRONTEND_URL=https://rishtaconnect-frontend.onrender.com
+FRONTEND_URL=https://classy-arithmetic-4918d4.netlify.app
 BASE_URL=https://rishtaconnect-backend.onrender.com
 SPRING_PROFILES_ACTIVE=prod
 FILE_UPLOAD_DIR=/opt/render/project/src/uploads
@@ -58,33 +56,31 @@ GENERATE_SOURCEMAP=false
 Write-Host ""
 
 # Step 5: Database options
-Write-Host "🗄️  Database Options:" -ForegroundColor Yellow
+Write-Host "🗄️  Database Setup:" -ForegroundColor Yellow
 Write-Host "-------------------" -ForegroundColor Gray
-Write-Host "Option 1: Railway (Recommended for MySQL)"
-Write-Host "  - Go to: https://railway.app"
-Write-Host "  - Deploy MySQL"
-Write-Host "  - Cost: ~$5/month"
-Write-Host ""
-Write-Host "Option 2: PlanetScale (Serverless MySQL)"
-Write-Host "  - Go to: https://planetscale.com"
-Write-Host "  - 5GB free tier"
-Write-Host ""
-Write-Host "Option 3: Render PostgreSQL"
-Write-Host "  - Free tier available"
-Write-Host "  - Requires changing backend to PostgreSQL"
+Write-Host "Using Render PostgreSQL (Recommended & FREE)"
+Write-Host "  - Go to: https://dashboard.render.com"
+Write-Host "  - Click: New + → PostgreSQL"
+Write-Host "  - Name: rishtaconnect-db"
+Write-Host "  - Region: Oregon (same as backend)"
+Write-Host "  - Plan: Free (256MB RAM, 1GB storage)"
+Write-Host "  - Note: Free tier expires after 90 days of inactivity"
 Write-Host ""
 
 # Step 6: Next steps
 Write-Host "🎯 Next Steps:" -ForegroundColor Cyan
 Write-Host "-------------" -ForegroundColor Gray
 @"
-1. Create a MySQL database on Railway or PlanetScale
-2. Go to https://render.com and sign in
-3. Click 'New +' → 'Blueprint'
-4. Connect your GitHub repository: Santu-developer/RishtaConnect
-5. Render will auto-detect render.yaml
-6. Add the environment variables shown above
-7. Click 'Apply' to deploy!
+1. Go to https://render.com and sign in with GitHub
+2. Click 'New +' → 'Blueprint'
+3. Connect your GitHub repository: Santu-developer/RishtaConnect
+4. Render will auto-detect render.yaml and create:
+   - PostgreSQL Database (rishtaconnect-db)
+   - Backend Web Service (rishtaconnect-backend)
+   - Frontend Static Site (rishtaconnect-frontend) [optional - already on Netlify]
+5. Add the environment variables shown above
+6. Click 'Apply' to deploy!
+7. Wait 10-15 minutes for first deployment
 "@ | Write-Host
 Write-Host ""
 Write-Host "📚 For detailed guide, see: RENDER_DEPLOYMENT_GUIDE.md" -ForegroundColor Cyan
