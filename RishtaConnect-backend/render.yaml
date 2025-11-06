@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: rishtaconnect-backend
+    env: java
+    buildCommand: ./mvnw clean install -DskipTests
+    startCommand: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/*.jar
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: BASE_URL
+        sync: false
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod

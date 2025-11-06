@@ -1,0 +1,92 @@
+/* Avatar Component Styles */
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Sizes */
+.avatar-small {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.avatar-medium {
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
+}
+
+.avatar-large {
+  width: 85px;
+  height: 85px;
+  font-size: 32px;
+}
+
+.avatar-xlarge {
+  width: 110px; /* Increased from 90px */
+  height: 110px; /* Increased from 90px */
+  font-size: 42px; /* Increased from 36px */
+  font-weight: 700;
+}
+
+/* Shapes */
+.avatar-square {
+  border-radius: 6px;
+}
+
+.avatar-circle {
+  border-radius: 50%;
+}
+
+/* Badge */
+.avatar-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e91e63;
+  color: white;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect */
+.avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .avatar-xlarge {
+    width: 64px;
+    height: 64px;
+    font-size: 24px;
+  }
+  
+  .avatar-large {
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+  }
+}

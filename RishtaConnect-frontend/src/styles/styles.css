@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700;800&display=swap');
+
+/* Base Styles */
+body {
+  margin: 0;
+  font-family: 'Open Sans', Arial, sans-serif;
+  line-height: 1.6;
+  background-color: var(--secondary-color);
+}
+
+:root {
+  /* Brand palette */
+  --primary-color: #cb0054;
+  --secondary-color: #ffffff;
+  --brand-pink: #ff2f8a;
+  --brand-pink-2: #ff10c1;
+  --ascent-color: #ee0eb8;
+  --blue-color: #007bff;
+  --danger-color: #dc0000;
+
+  /* Greys & text */
+  --text-color: #1f2937; /* slate-800 */
+  --text-muted: #6b7280; /* slate-500 */
+  --grey-50: #fafafa;
+  --grey-100: #f4f4f5;
+  --grey-200: #e5e7eb;
+  --grey-color: #f2f2f2;
+  --border-color: #e5e7eb;
+
+  /* Shadows & radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.06);
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+}
+
+/* Base reset and defaults */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body { color: var(--text-color); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+img, svg, video { max-width: 100%; height: auto; }
+button { font: inherit; }
+
+/* Headings use Poppins to match MatriLab */
+h1, h2, h3, .heading, .section-title {
+  font-family: 'Poppins', 'Open Sans', Arial, sans-serif;
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+  --secondary-color: #0f172a; /* surface */
+  --text-color: #e5e7eb;      /* text */
+  --text-muted: #94a3b8;      /* muted */
+  --grey-50: #0b1220;         /* input bg */
+  --grey-100: #111827;
+  --grey-200: #1f2937;
+  --border-color: #334155;
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  border: 1px solid var(--border-color);
+  background: var(--secondary-color);
+  color: var(--text-color);
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; margin-left: 8px;
+}
+.theme-toggle:hover { box-shadow: var(--shadow-soft); }
+
+
+p {
+  margin: 0;
+}
+
+.container-max-width {
+  max-width: 1320px;
+  margin: 0 auto;
+  /* padding: 0 15px; */
+}
+
+/* Top Bar */
+.top-bar {
+  width: 100%;
+  background-color: var(--secondary-color);
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  z-index: 1;
+  margin-top: -10px;
+}
+
+.top-bar-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping for responsiveness */
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.contact-info {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Wrap items for small screens */
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+.info-item i {
+  margin-right: 5px;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add spacing */
+}
+
+.social-icons i {
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.social-icons i:hover {
+  color: var(--primary-color);
+}
+
+/* Main Navbar */
+.main-navbar {
+  z-index: 99;
+  padding: 5px 0;
+  background-color: var(--secondary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  margin-top: -12px;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* max-width: 1320px; */
+  /* margin: 0 auto; */
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-color);
+}
+
+.logo {
+  height: 75px;
+  width: 150px; /* Adjusted for better scaling */
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px; /* Adjusted gap */
+  align-items: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: var(--primary-color);
+}
+
+.menu-toggle {
+  display: none; /* Hidden by default */
+  background: none;
+  border: none;
+  font-size: 30px; /* Reduced font size */
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.language-select {
+  border: 1px solid var(--border-color);
+  padding: 9px 12px;
+  border-radius: 4px;
+  color: var(--text-muted);
+}
+
+.login-btn {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, margin-right 0.3s;
+}
+
+.login-btn:hover {
+  /* background-color: #b30000; */
+  color: var(--secondary-color);
+}
+
+.margin-home-for-matrimonial {
+  margin-top: 40px;
+}
+
+/* Carousel start */
+
+/* Carousel container */
+.carousel-container {
+  width: 100%;
+  margin: 10 auto;
+  padding: 40px;
+}
+
+/* Individual carousel card */
+.carousel-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  margin-top: 55px;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.carousel-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.carousel-card h2 {
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.carousel-card p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* Style for dots navigation */
+.slick-dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: var(--blue-color);
+}
+
+.slick-dots li.slick-active button:before {
+  color: #ffcd00;
+}
+
+
+/* Responsive Design */
+
+/* Tablets and iPads (1024px and below) */
+@media screen and (max-width: 1024px) {
+  .carousel-container {
+    padding: 20px;
+  }
+
+  .carousel-card {
+    padding: 20px;
+    margin-top: 30px;
+  }
+
+  .carousel-card h2 {
+    font-size: 18px; /* Adjust heading size for tablets */
+  }
+
+  .carousel-card p {
+    font-size: 14px; /* Adjust paragraph size for tablets */
+  }
+}
+
+/* Adjust the layout of the carousel at different breakpoints */
+
+@media (max-width: 768px) {
+
+  .top-bar-wrapper {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .navbar-container {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: var(--secondary-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .nav-links.show {
+    display: flex;
+    width: 100%;
+    top: 93px;
+    right: 0px;
+    align-items: flex-start;
+    border-radius: 0;
+  }
+  .main-navbar .container-max-width .login-btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, margin-right 0.3s;
+}
+
+  .main-navbar .container-max-width .nav-item {
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    padding: 0px 0px 10px 10px;
+  }
+
+  .menu-toggle {
+    display: block; /* Show menu toggle */
+  }
+
+  .actions {
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .carousel-container {
+    padding: 15px;
+  }
+
+  .carousel-card {
+    padding: 15px;
+    margin-top: 25px;
+    width: 100%; /* Make carousel cards take full width on smaller screens */
+  }
+
+  .carousel-card img {
+    height: 180px; /* Adjust image height */
+  }
+
+  .carousel-card h2 {
+    font-size: 16px; /* Smaller heading for mobile screens */
+  }
+
+  .carousel-card p {
+    font-size: 14px; /* Adjust paragraph size for mobile screens */
+  }
+}
+
+@media (max-width: 480px) {
+
+  .logo {
+    height: auto;
+    width: 140px;
+  }
+
+  .contact-info {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .language-select {
+    font-size: 14px;
+  }
+
+  .social-icons {
+    gap: 5px; /* Reduced gap */
+  }
+
+  .social-icons i {
+    font-size: 14px;
+  }
+  .carousel-container {
+    padding: 10px;
+  }
+
+  .carousel-card {
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .carousel-card img {
+    height: 150px; /* Adjust image height for small mobile screens */
+  }
+
+  .carousel-card h2 {
+    font-size: 14px; /* Adjust heading size for very small screens */
+  }
+
+  .carousel-card p {
+    font-size: 12px; /* Adjust paragraph size for very small screens */
+  }
+
+  .slick-dots {
+    bottom: 10px; /* Adjust dot position for mobile */
+  }
+}
+
+/* Carousel end */
+
+
+
+.status {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.status.pending {
+  background-color: #edca89; /* Orange */
+  color: white;
+  font-weight: 500;
+}
+
+.status.accepted {
+  background-color: #7be67f;
+  color: white;
+  font-weight: 500; /* Green */
+}
+
+.status.unknown {
+  background-color: #e17e77;
+  color: white;
+  font-weight: 500; 
+}
+
+.status.other {
+  background-color: #9e9e9e; 
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+
+
+/* Custom scrollbar for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width of the scrollbar */
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+  background: var(--border-color); /* Light background */
+  border-radius: 10px;
+}
+
+/* Scrollbar Thumb (draggable part) */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color); /* Pink color (change as needed) */
+  border-radius: 10px;
+}
+
+/* Scrollbar Thumb on Hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ascent-color); /* Darker pink */
+}
