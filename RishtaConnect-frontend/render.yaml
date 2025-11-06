@@ -1,37 +1,17 @@
-# Render Configuration for Frontend{
-
-# Deploy RishtaConnect Frontend as a Static Site on Render  "name": "rishtaconnect-frontend",
-
-  "type": "web",
-
-services:  "env": "static",
-
-  - type: web  "buildCommand": "npm install && npm run build",
-
-    name: rishtaconnect-frontend  "staticPublishPath": "./build",
-
-    runtime: static  "envVars": [
-
-    buildCommand: npm install && npm run build    {
-
-    staticPublishPath: build      "key": "NODE_VERSION",
-
-    envVars:      "value": "18"
-
-      - key: REACT_APP_API_URL    },
-
-        value: https://rishtaconnect-backend.onrender.com    {
-
-      - key: NODE_VERSION      "key": "REACT_APP_API_URL",
-
-        value: "18"      "generateValue": false
-
-      - key: GENERATE_SOURCEMAP    }
-
-        value: "false"  ]
-
-    routes:}
-
+services:
+  - type: web
+    name: rishtaconnect-frontend
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        sync: false
+      - key: NODE_VERSION
+        value: "18"
+      - key: GENERATE_SOURCEMAP
+        value: "false"
+    routes:
       - type: rewrite
         source: /*
         destination: /index.html
