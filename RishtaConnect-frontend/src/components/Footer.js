@@ -21,17 +21,17 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Policies</h4>
           <ul>
-            <li><a href="javascript:void(0)">Privacy Policy</a></li>
-            <li><a href="javascript:void(0)">Terms of Service</a></li>
-            <li><a href="javascript:void(0)">Purchase Policy</a></li>
+            <li><a href="#privacy-policy">Privacy Policy</a></li>
+            <li><a href="#terms-of-service">Terms of Service</a></li>
+            <li><a href="#purchase-policy">Purchase Policy</a></li>
           </ul>
         </div>
         <div className="footer-section">
           <h4>Contact Us</h4>
           <ul>
             <li><a href="tel:+917339645053">+91 123456789</a></li>
-            <li><a href="mailto:democompany@gmail.com">rishtaconnect2025@gmail.com</a></li>
-            <li><a href="javascript:void(0)">Indore, India</a></li>
+            <li><a href="mailto:rishtaconnect2025@gmail.com">rishtaconnect2025@gmail.com</a></li>
+            <li><span>Indore, India</span></li>
           </ul>
         </div>
       </div>

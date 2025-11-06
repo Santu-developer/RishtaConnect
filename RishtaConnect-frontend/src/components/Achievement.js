@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "../styles/styles.css";
 import "../styles/achievements.css";
 
@@ -43,32 +43,7 @@ const Achievement = () => {
     },
   ];
 
-  // Intersection Observer to trigger animation when section is visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
-            animateCounters();
-          }
-        });
-      },
-      { threshold: 0.3 } // Trigger when 30% of section is visible
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [hasAnimated]);
-
-  const animateCounters = () => {
+  const animateCounters = useCallback(() => {
     const duration = 2000; // 2 seconds
     const steps = 60; // 60 frames for smooth animation
     const interval = duration / steps;
@@ -91,7 +66,34 @@ const Achievement = () => {
         }));
       }, interval);
     });
-  };
+  }, [achievements]);
+
+  // Intersection Observer to trigger animation when section is visible
+  useEffect(() => {
+    const sectionElement = sectionRef.current;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+            animateCounters();
+          }
+        });
+      },
+      { threshold: 0.3 } // Trigger when 30% of section is visible
+    );
+
+    if (sectionElement) {
+      observer.observe(sectionElement);
+    }
+
+    return () => {
+      if (sectionElement) {
+        observer.unobserve(sectionElement);
+      }
+    };
+  }, [hasAnimated, animateCounters]);
 
   const formatNumber = (num) => {
     return num.toLocaleString();
