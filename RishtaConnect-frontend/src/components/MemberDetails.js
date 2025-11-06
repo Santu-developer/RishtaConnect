@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import "../styles/memberDetails.css";
 import ContactImg from "../assets/ContactImg.png";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +18,6 @@ const MemberDetails = () => {
   const membersPerPage = 2;
   const [users, setUsers] = useState([]);
   const [currentPackage, setCurrentPackage] = useState(null);
-  const [viewedProfilesCount, setViewedProfilesCount] = useState(0);
   const [isLoadingPackage, setIsLoadingPackage] = useState(true);
   const [filters, setFilters] = useState({
     memberId: "",
@@ -32,7 +31,6 @@ const MemberDetails = () => {
   const [interestedMembers, setInterestedMembers] = useState([]);
   const [ignoredMembers, setIgnoredMembers] = useState([]);
   const [shortlistedMembers, setShortlistedMembers] = useState([]);
-  const [reportedMembers, setReportedMembers] = useState([]);
 
   // Apply URL query parameters to filters on mount
   useEffect(() => {
@@ -56,24 +54,8 @@ const MemberDetails = () => {
     }
   }, [location.search]);
 
-  // Fetch users on component mount
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const data = await getAllUsers();
-        setUsers(data.userList || []); // Ensure fallback if no userList
-        setCurrentPage(1); // Reset to the first page when data is fetched
-      } catch (error) {
-        toast.error("Failed to load members");
-      }
-    };
-
-    fetchUsers();
-    checkUserPackage();
-  }, []);
-
   // Check user's current package and profile view limit
-  const checkUserPackage = async () => {
+  const checkUserPackage = useCallback(async () => {
     try {
       setIsLoadingPackage(true);
       const userData = JSON.parse(localStorage.getItem("userData"));
@@ -98,7 +80,6 @@ const MemberDetails = () => {
       if (activePurchases.length > 0) {
         const activePackage = activePurchases[0];
         setCurrentPackage(activePackage);
-        setViewedProfilesCount(activePackage.profileViewCount || 0);
       } else {
         // No package found - should not happen as free package is created on registration
         toast.warning("No active package found. Please refresh or login again.", {
@@ -114,7 +95,23 @@ const MemberDetails = () => {
     } finally {
       setIsLoadingPackage(false);
     }
-  };
+  }, [navigate]);
+
+  // Fetch users on component mount
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await getAllUsers();
+        setUsers(data.userList || []); // Ensure fallback if no userList
+        setCurrentPage(1); // Reset to the first page when data is fetched
+      } catch (error) {
+        toast.error("Failed to load members");
+      }
+    };
+
+    fetchUsers();
+    checkUserPackage();
+  }, [checkUserPackage]);
 
   // Handle filter changes
   const handleFilterChange = (e) => {
@@ -205,7 +202,7 @@ const MemberDetails = () => {
       }
       
       // Use the new expressInterest API
-      const response = await expressInterest(userId, user.id, "Interested in your profile");
+      await expressInterest(userId, user.id, "Interested in your profile");
       
       // Add to local state
       setInterestedMembers((prev) => [

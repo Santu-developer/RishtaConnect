@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import "../styles/styles.css";
 import "../styles/achievements.css";
 
@@ -12,7 +12,7 @@ const Achievement = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
 
-  const achievements = [
+  const achievements = useMemo(() => [
     {
       icon: "fa-user",
       number: "50,000+",
@@ -41,7 +41,7 @@ const Achievement = () => {
       key: "communities",
       description: "Communities Served",
     },
-  ];
+  ], []);
 
   const animateCounters = useCallback(() => {
     const duration = 2000; // 2 seconds

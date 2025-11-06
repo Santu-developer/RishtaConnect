@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/styles.css";
 // import Logo from "../assets/mangala.PNG";
 import icon from "../assets/Matrilab.png"
@@ -8,7 +8,6 @@ import ThemeToggle from "./ThemeToggle";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Initially false
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {

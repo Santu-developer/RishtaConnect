@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -16,7 +16,7 @@ const MatrimonialPackage = () => {
   const navigate = useNavigate();
 
   // Default fallback packages if API is unavailable
-  const fallbackPackages = [
+  const fallbackPackages = useMemo(() => [
     {
       name: "Basic",
       price: "₹49",
@@ -47,7 +47,7 @@ const MatrimonialPackage = () => {
         { title: "Profile Views", value: "Unlimited" },
       ],
     },
-  ];
+  ], []);
 
   // Fetch all packages when the component loads
   useEffect(() => {
@@ -62,7 +62,7 @@ const MatrimonialPackage = () => {
       }
     };
     run();
-  }, []);
+  }, [fallbackPackages]);
 
   const handleBuyNowClick = (packageData) => {
     // Check if user is logged in
