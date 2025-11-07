@@ -6,7 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-
+// Force light theme
+document.documentElement.setAttribute("data-theme", "light");
+localStorage.setItem("theme", "light");
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

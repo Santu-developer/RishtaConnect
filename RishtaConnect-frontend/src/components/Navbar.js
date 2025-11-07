@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import "../styles/styles.css";
 // import Logo from "../assets/mangala.PNG";
 import icon from "../assets/Matrilab.png"
-import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -123,7 +122,6 @@ const Navbar = () => {
                 <option>English</option>
                 <option>Hindi</option>
               </select>
-              <ThemeToggle />
               {isLoggedIn ? (
                 <>
                   <Link to="/user/dashboard">
