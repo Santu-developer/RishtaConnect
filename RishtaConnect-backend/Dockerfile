@@ -22,4 +22,4 @@ RUN mkdir -p /tmp/uploads
 
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "java -Dspring.profiles.active=prod -Dserver.port=$\{PORT:-8080\} -jar app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
