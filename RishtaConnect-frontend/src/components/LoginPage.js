@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css"; // Import CSS for toast notifica
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     register,
